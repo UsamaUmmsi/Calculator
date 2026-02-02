@@ -1,0 +1,544 @@
+/* ============================================
+   DESIGN SYSTEM & CSS VARIABLES
+   ============================================ */
+
+:root {
+    /* Color Palette - Dark Theme */
+    --bg-primary: #0f0f1e;
+    --bg-secondary: #1a1a2e;
+    --bg-calculator: rgba(26, 26, 46, 0.8);
+    --bg-display: rgba(15, 15, 30, 0.6);
+
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0c0;
+    --text-expression: #7070a0;
+
+    --btn-number: rgba(255, 255, 255, 0.08);
+    --btn-number-hover: rgba(255, 255, 255, 0.15);
+    --btn-function: rgba(138, 99, 255, 0.15);
+    --btn-function-hover: rgba(138, 99, 255, 0.25);
+    --btn-operator: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --btn-operator-hover: linear-gradient(135deg, #7c8ef5 0%, #8b5ab8 100%);
+    --btn-equals: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --btn-equals-hover: linear-gradient(135deg, #f5a4ff 0%, #ff6b7f 100%);
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 40px rgba(138, 99, 255, 0.3);
+
+    --border-radius-sm: 12px;
+    --border-radius-md: 16px;
+    --border-radius-lg: 24px;
+
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Theme */
+[data-theme="light"] {
+    --bg-primary: #f0f0f8;
+    --bg-secondary: #ffffff;
+    --bg-calculator: rgba(255, 255, 255, 0.9);
+    --bg-display: rgba(240, 240, 248, 0.8);
+
+    --text-primary: #1a1a2e;
+    --text-secondary: #4a4a6a;
+    --text-expression: #7070a0;
+
+    --btn-number: rgba(0, 0, 0, 0.05);
+    --btn-number-hover: rgba(0, 0, 0, 0.1);
+    --btn-function: rgba(138, 99, 255, 0.1);
+    --btn-function-hover: rgba(138, 99, 255, 0.2);
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.15);
+    --shadow-glow: 0 0 40px rgba(138, 99, 255, 0.2);
+}
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* ============================================
+   BACKGROUND EFFECTS
+   ============================================ */
+
+.background-gradient {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(138, 99, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 50%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+    animation: gradientShift 15s ease infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-5%, -5%) rotate(180deg);
+    }
+}
+
+/* ============================================
+   CONTAINER & LAYOUT
+   ============================================ */
+
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+.calculator-wrapper {
+    position: relative;
+}
+
+/* ============================================
+   CALCULATOR CARD
+   ============================================ */
+
+.calculator {
+    background: var(--bg-calculator);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--border-radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-smooth);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   DISPLAY SECTION
+   ============================================ */
+
+.display-section {
+    background: var(--bg-display);
+    border-radius: var(--border-radius-md);
+    padding: 24px;
+    margin-bottom: 24px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all var(--transition-smooth);
+}
+
+.expression {
+    font-size: 16px;
+    color: var(--text-expression);
+    font-weight: 400;
+    min-height: 24px;
+    text-align: right;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.expression::-webkit-scrollbar {
+    display: none;
+}
+
+.display {
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: right;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    letter-spacing: -0.02em;
+    transition: color var(--transition-smooth);
+}
+
+.display::-webkit-scrollbar {
+    display: none;
+}
+
+/* ============================================
+   BUTTONS GRID
+   ============================================ */
+
+.buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+/* ============================================
+   BUTTON STYLES
+   ============================================ */
+
+.btn {
+    background: var(--btn-number);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    color: var(--text-primary);
+    font-size: 24px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    padding: 24px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn:hover {
+    background: var(--btn-number-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* Function Buttons (AC, Delete, %) */
+.btn-function {
+    background: var(--btn-function);
+    color: #a78bfa;
+    font-weight: 600;
+}
+
+.btn-function:hover {
+    background: var(--btn-function-hover);
+    color: #c4b5fd;
+}
+
+.btn-function svg {
+    vertical-align: middle;
+}
+
+/* Operator Buttons */
+.btn-operator {
+    background: var(--btn-operator);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(138, 99, 255, 0.3);
+}
+
+.btn-operator:hover {
+    background: var(--btn-operator-hover);
+    box-shadow: 0 6px 16px rgba(138, 99, 255, 0.4);
+}
+
+/* Equals Button */
+.btn-equals {
+    background: var(--btn-equals);
+    color: white;
+    font-weight: 700;
+    font-size: 28px;
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+}
+
+.btn-equals:hover {
+    background: var(--btn-equals-hover);
+    box-shadow: 0 6px 16px rgba(245, 87, 108, 0.4);
+}
+
+/* Zero Button (spans 2 columns) */
+.btn-zero {
+    grid-column: span 2;
+}
+
+/* ============================================
+   THEME TOGGLE
+   ============================================ */
+
+.theme-toggle {
+    position: absolute;
+    top: -60px;
+    right: 0;
+    width: 48px;
+    height: 48px;
+    background: var(--bg-calculator);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    box-shadow: var(--shadow-md);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: var(--shadow-lg);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95) rotate(15deg);
+}
+
+.theme-toggle svg {
+    position: absolute;
+    transition: all var(--transition-smooth);
+}
+
+.sun-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+.moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+[data-theme="light"] .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+[data-theme="light"] .moon-icon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.calculating {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablets and smaller */
+@media (max-width: 768px) {
+    .container {
+        max-width: 380px;
+        padding: 16px;
+    }
+
+    .calculator {
+        padding: 24px;
+    }
+
+    .display {
+        font-size: 42px;
+    }
+
+    .btn {
+        padding: 20px;
+        font-size: 22px;
+    }
+
+    .buttons-grid {
+        gap: 10px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .container {
+        max-width: 100%;
+        padding: 12px;
+    }
+
+    .calculator {
+        padding: 20px;
+        border-radius: var(--border-radius-md);
+    }
+
+    .display-section {
+        padding: 20px;
+        min-height: 100px;
+        margin-bottom: 20px;
+    }
+
+    .expression {
+        font-size: 14px;
+    }
+
+    .display {
+        font-size: 36px;
+    }
+
+    .btn {
+        padding: 18px;
+        font-size: 20px;
+        border-radius: 10px;
+    }
+
+    .btn-equals {
+        font-size: 24px;
+    }
+
+    .buttons-grid {
+        gap: 8px;
+    }
+
+    .theme-toggle {
+        width: 44px;
+        height: 44px;
+        top: -56px;
+    }
+}
+
+/* Small mobile phones */
+@media (max-width: 360px) {
+    .display {
+        font-size: 32px;
+    }
+
+    .btn {
+        padding: 16px;
+        font-size: 18px;
+    }
+
+    .btn-equals {
+        font-size: 22px;
+    }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+    .container {
+        max-width: 100%;
+        padding: 8px;
+    }
+
+    .calculator {
+        padding: 16px;
+    }
+
+    .display-section {
+        padding: 16px;
+        min-height: 80px;
+        margin-bottom: 16px;
+    }
+
+    .display {
+        font-size: 28px;
+    }
+
+    .expression {
+        font-size: 12px;
+    }
+
+    .btn {
+        padding: 12px;
+        font-size: 18px;
+    }
+
+    .buttons-grid {
+        gap: 6px;
+    }
+
+    .theme-toggle {
+        top: 8px;
+        right: 8px;
+    }
+}
+
+/* High resolution displays */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 460px;
+    }
+
+    .calculator {
+        padding: 32px;
+    }
+
+    .display {
+        font-size: 52px;
+    }
+
+    .btn {
+        padding: 26px;
+        font-size: 26px;
+    }
+}

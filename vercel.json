@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "premium-calculator",
+    "builds": [
+        {
+            "src": "index.html",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/$1"
+        }
+    ]
+}
