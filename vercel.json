@@ -1,6 +1,27 @@
 {
     "version": 2,
     "name": "premium-calculator",
+    "public": true,
+    "headers": [
+        {
+            "source": "/style.css",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "text/css"
+                }
+            ]
+        },
+        {
+            "source": "/script.js",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/javascript"
+                }
+            ]
+        }
+    ],
     "builds": [
         {
             "src": "index.html",
